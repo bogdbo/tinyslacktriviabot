@@ -1,0 +1,9 @@
+{
+  "token": "TOKEN",
+  "channels": [
+    "G0JHBFCJD"
+  ],
+  "showScoreInterval": 5,
+  "nextQuestionGap": 8000,
+  "skipCount": 2
+}

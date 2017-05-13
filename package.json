@@ -1,6 +1,6 @@
 {
   "name": "tinytriviaslackbot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A very simple, small and extendable trivia bot for slack",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/troggzor/tinyslacktriviabot#readme",
   "dependencies": {
-    "node-cache": "^4.1.1",
     "slackbots": "^1.0.2",
     "sqlite": "^2.7.0"
   }
