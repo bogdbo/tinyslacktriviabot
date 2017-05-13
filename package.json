@@ -1,0 +1,29 @@
+{
+  "name": "tinytriviaslackbot",
+  "version": "0.0.1",
+  "description": "A very simple, small and extendable trivia bot for slack",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/troggzor/tinyslacktriviabot.git"
+  },
+  "keywords": [
+    "trivia",
+    "slack",
+    "bot",
+    "quiz",
+    "questions"
+  ],
+  "author": "Bogdan Boiculese",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/troggzor/tinyslacktriviabot/issues"
+  },
+  "homepage": "https://github.com/troggzor/tinyslacktriviabot#readme",
+  "dependencies": {
+    "slackbots": "^1.0.2"
+  }
+}
