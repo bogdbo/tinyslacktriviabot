@@ -1,8 +1,8 @@
 {
   "name": "tinytriviaslackbot",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A very simple, small and extendable trivia bot for slack",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +24,15 @@
   },
   "homepage": "https://github.com/troggzor/tinyslacktriviabot#readme",
   "dependencies": {
-    "slackbots": "^1.0.2"
+    "slackbots": "^1.0.2",
+    "sqlite": "^2.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }
