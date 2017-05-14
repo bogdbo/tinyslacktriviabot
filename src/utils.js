@@ -1,4 +1,5 @@
 var fs = require('fs')
+var path = require('path')
 
 class Utils {
   static makeHint (answer) {
@@ -30,18 +31,18 @@ class Utils {
     return hint
   }
 
-  static loadSettings (path) {
-    if (path && fs.existsSync(path)) {
-      return JSON.parse(fs.readFileSync(path, 'utf8').trim())
+  static loadSettings (p) {
+    if (p && fs.existsSync(p)) {
+      return JSON.parse(fs.readFileSync(p, 'utf8').trim())
     }
 
     throw String('cannot load settings')
   }
 
   static loadScores (channelId) {
-    var path = `data/scores/${channelId}.json`
-    if (fs.existsSync(path)) {
-      var data = fs.readFileSync(path, 'utf8').trim()
+    var p = path.resolve(__dirname, `./../data/scores/${channelId}.json`)
+    if (fs.existsSync(p)) {
+      var data = fs.readFileSync(p, 'utf8').trim()
       return JSON.parse(data)
     }
 
@@ -50,7 +51,7 @@ class Utils {
 
   static saveScores (channelId, scores) {
     console.log(`Saving scores: ${channelId}`)
-    fs.writeFileSync(`data/scores/${channelId}.json`, JSON.stringify(scores))
+    fs.writeFileSync(path.resolve(__dirname, `./../data/scores/${channelId}.json`), JSON.stringify(scores))
   }
 }
 
