@@ -30,14 +30,12 @@ class Utils {
     return hint;
   }
 
-  static loadSettings(path, shouldThrow) {
+  static loadSettings(path) {
     if (path && fs.existsSync(path)) {
       return JSON.parse(fs.readFileSync(path, 'utf8').trim());
-    } else if (!shouldThrow) {
-      return this.loadSettings('./myconfig.json', true);
-    } else {
-      throw 'cannot load settings';
     }
+
+    throw 'cannot load settings';
   }
 
   static loadScores(channelId) {

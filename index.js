@@ -5,7 +5,7 @@ var Utils = require('./src/utils.js');
 var db = require('sqlite');
 
 db.open('./data/trivia.db');
-var settings = Utils.loadSettings();
+var settings = Utils.loadSettings('./config.json');
 var bot = new SlackBot({ token: settings.token , name: 'trivia' });
 
 bot.on(EventNames.Open, async () => {
