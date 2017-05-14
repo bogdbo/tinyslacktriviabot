@@ -32,7 +32,7 @@ class Utils {
 
   static loadSettings(path, shouldThrow) {
     if (path && fs.existsSync(path)) {
-      return JSON.parse(fs.readFileSync(path, 'utf8').trim('"'));
+      return JSON.parse(fs.readFileSync(path, 'utf8').trim());
     } else if (!shouldThrow) {
       return this.loadSettings('./myconfig.json', true);
     } else {
@@ -43,7 +43,7 @@ class Utils {
   static loadScores(channelId) {
     var path = `data/scores/${channelId}.json`;
     if (fs.existsSync(path)) {
-      var data = fs.readFileSync(path, 'utf8').trim('"')
+      var data = fs.readFileSync(path, 'utf8').trim()
       return JSON.parse(data);
     }
 

@@ -4,7 +4,7 @@ var ChannelBot = require('./src/channelBot.js');
 var Utils = require('./src/utils.js');
 var db = require('sqlite');
 
-db.open('./trivia.db');
+db.open('./data/trivia.db');
 var settings = Utils.loadSettings();
 var bot = new SlackBot({ token: settings.token , name: 'trivia' });
 
