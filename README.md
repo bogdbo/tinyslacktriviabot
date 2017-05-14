@@ -1,3 +1,37 @@
 # tinyslacktriviabot
 
-Objective of this project is to have a small as possible, extensible trivia bot. The alternatives at this time are usually doing too much or are using modules that are no longer maintained and I decided I would write my version rather than keep maintaining various forks (which I've done 'till now).
+A tiny, extensible slack trivia bot
+
+## Installation
+
+npm install tinyslacktriviabot
+
+## Usage
+
+1. Create a file `config.json` (example below)
+  ```
+  {
+    "name": "trivia",
+    "token": "<Slack_Bot_Token>",
+    "channels": [ "G0JHBFCJD" ],
+    "showScoreInterval": 5,
+    "nextQuestionGap": 8000,
+    "skipCount": 2
+  }
+ ```
+ > Create a new `<Slack_Bot_Token>` here https://my.slack.com/services/new/bot
+ 
+ 2. Import module & run
+ 
+ ```
+var bot = require('tinyslacktriviabot')
+bot.run()
+```
+
+## History
+
+v1.0.0 - Initial version
+
+## License
+
+© 2017 WTFPL – Do What the Fuck You Want to Public License
