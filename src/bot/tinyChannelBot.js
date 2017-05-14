@@ -4,8 +4,8 @@ class TinyChannelBot extends TinyBotBase {
   async run () {
     await this.nextQuestion(0)
     while (true) {
-      var message = await this.reader.get()
-      var user = await this.getUser(message)
+      const message = await this.reader.get()
+      const user = await this.getUser(message)
 
       if (/^scores$/ig.test(message.text)) {
         await this.handleScores()
