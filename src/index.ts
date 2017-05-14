@@ -5,7 +5,7 @@ import {EventNames} from './constants.js';
 import {ChannelBot} from './channelBot.js';
 
 db.open('./data/trivia.db');
-const settings = Utils.loadSettings('./myconfig.json', false);
+const settings = Utils.loadSettings('./config.json', false);
 const bot = new SlackBot({ token: settings.token , name: settings.name });
 
 bot.on(EventNames.Open, async () => {
