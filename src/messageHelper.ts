@@ -1,6 +1,6 @@
-var Utils = require('./utils.js');
+import {Utils} from './utils';
 
-class MessageHelper {
+export class MessageHelper {
   static makeHintMessage(question) {
     return {
       icon_emoji: ':bulb:',
@@ -87,5 +87,3 @@ class MessageHelper {
     }
   }
 }
-
-module.exports = MessageHelper;

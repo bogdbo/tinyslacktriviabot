@@ -1,8 +1,11 @@
-var EventNames = require('./constants.js').EventNames;
-var MessageTypes = require('./constants.js').MessageTypes;
+import {EventNames, MessageTypes} from './constants';
 
 // Simple wrapper to convert Emit messages to Promises so we can use async/await for cleaner code
-class MessageReader {
+export class MessageReader {
+  slackBot:any;
+  channelId:string;
+  promiseResolveFn:any;
+
   constructor(slackBot, channelId) {
     this.slackBot = slackBot;
     this.channelId = channelId;
@@ -26,5 +29,3 @@ class MessageReader {
     });
   };
 }
-
-module.exports = MessageReader;

@@ -2,7 +2,7 @@
   "name": "tinytriviaslackbot",
   "version": "0.1.2",
   "description": "A very simple, small and extendable trivia bot for slack",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,7 +15,8 @@
     "slack",
     "bot",
     "quiz",
-    "questions"
+    "questions",
+    "typescript"
   ],
   "author": "Bogdan Boiculese",
   "license": "WTFPL",
@@ -26,5 +27,12 @@
   "dependencies": {
     "slackbots": "^1.0.2",
     "sqlite": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.18",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-typescript": "^3.1.6",
+    "typescript": "^2.3.2"
   }
 }

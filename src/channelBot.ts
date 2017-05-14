@@ -1,8 +1,18 @@
-var MessageReader = require('./messageReader.js');
-var Utils = require('./utils.js');
-var MessageHelper = require('./messageHelper.js');
+import {MessageReader} from './messageReader';
+import {Utils} from './utils';
+import {MessageHelper} from './messageHelper';
 
-class ChannelBot {
+export class ChannelBot {
+  db:any;
+  slackBot: any;
+  channelId: string;
+  reader: MessageReader;
+  scores: any;
+  settings: any;
+  showScores: any;
+  skips: any;
+  question: any;
+
   constructor(db, slackBot, channelId, settings) {
     this.db = db;
     this.slackBot = slackBot;
@@ -23,21 +33,21 @@ class ChannelBot {
     await this.slackBot.postMessage(this.channelId, null, params);
   }
 
-  async _nextQuestion(delay) {
+  async _nextQuestion(delay = this.settings.nextQuestionGap) {
     this.question = null;
     this.skips = {};
     setTimeout(async () => {
       this.question = await this.db.get('SELECT id, q, a FROM QUESTIONS ORDER BY random() LIMIT 1');
       await this._postMessage(MessageHelper.makeQuestionMessage(this.question));
-    }, isNaN(delay) ? this.settings.nextQuestionGap : delay);
+    }, delay);
   };
 
   async run() {
     await this._nextQuestion(0);
     while (true) {
-      var message = await this.reader.get();
-      var haveQuestion = this.question != null;
-      var user = await this.slackBot.getUserById(message.user);
+      const message:any = await this.reader.get();
+      const haveQuestion = this.question != null;
+      const user = await this.slackBot.getUserById(message.user);
       switch (true) {
         case /^scores$/ig.test(message.text):
           this.showScores = this.settings.showScoreInterval;
@@ -72,5 +82,3 @@ class ChannelBot {
     }
   }
 }
-
-module.exports = ChannelBot;

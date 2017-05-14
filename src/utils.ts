@@ -1,6 +1,6 @@
-var fs = require('fs');
+import * as fs from 'fs';
 
-class Utils {
+export class Utils {
   static makeHint(answer) {
     if (answer.length <= 2) {
       return 'answer is too short';
@@ -18,7 +18,7 @@ class Utils {
       visibleIndexes.push(randomIndex);
     }
 
-    var answerArray = [...answer];
+    var answerArray = answer.split('');
     for (var i = 0; i < answerArray.length; i++) {
       // Replace hidden indexes with '⁎' and keep whitespace
       if (visibleIndexes.indexOf(i) === -1 && /\s/.test(answerArray[i]) === false) {
@@ -30,9 +30,9 @@ class Utils {
     return hint;
   }
 
-  static loadSettings(path, shouldThrow) {
+  static loadSettings(path, shouldThrow): any {
     if (path && fs.existsSync(path)) {
-      return JSON.parse(fs.readFileSync(path, 'utf8').trim('"'));
+      return JSON.parse(fs.readFileSync(path, 'utf8').trim());
     } else if (!shouldThrow) {
       return this.loadSettings('./myconfig.json', true);
     } else {
@@ -43,8 +43,7 @@ class Utils {
   static loadScores(channelId) {
     var path = `data/scores/${channelId}.json`;
     if (fs.existsSync(path)) {
-      var data = fs.readFileSync(path, 'utf8').trim('"')
-      return JSON.parse(data);
+      return JSON.parse(fs.readFileSync(path, 'utf8').trim());
     }
 
     return {};
@@ -55,5 +54,3 @@ class Utils {
     fs.writeFileSync(`data/scores/${channelId}.json`, JSON.stringify(scores));
   }
 }
-
-module.exports = Utils;
