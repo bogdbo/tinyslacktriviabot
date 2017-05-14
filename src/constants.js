@@ -1,16 +1,16 @@
 var constants = {
-    EventNames: {
-        Message: 'message',
-        Start: 'start',
-        Open: 'open'
-    },
+  EventNames: {
+    Message: 'message',
+    Start: 'start',
+    Open: 'open'
+  },
 
-    MessageTypes: {
-        Message: 'message',
-    },
-};
+  MessageTypes: {
+    Message: 'message'
+  }
+}
 
 
-module.exports = constants;
+module.exports = constants
 
 
