@@ -7,7 +7,6 @@ class MessageHelper {
       attachments: [{
         "fallback": "hint",
         "color": "#ffdd00",
-        "author_name": `Hint`,
         "title": Utils.makeHint(question.a),
         "footer": `${question.a.length} letters`
       }]
@@ -21,8 +20,15 @@ class MessageHelper {
         "fallback": "question",
         "color": "#ff4828",
         "author_name": "Next question",
-        "title": `${question.q}\n\nHint: ${Utils.makeHint(question.a)}`,
-        "footer": `${question.a.length} letters`
+        "title": `${question.q}`,
+        "footer": `${question.a.length} letters`,
+        "fields": [
+          {
+            "title": '',
+            "value": `Hint: ${Utils.makeHint(question.a)}`,
+            "short": false
+          }
+        ],
       }]
     };
   }
@@ -46,11 +52,8 @@ class MessageHelper {
       attachments: [{
         "fallback": "skip",
         "color": "#ededed",
-        "author_name": "Skip",
-        "title": `@${user.name} wishes to skip this question`,
         "footer": `${skipsLeft} more skip needed`
-      }
-      ]
+      }]
     }
   }
 

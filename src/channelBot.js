@@ -29,11 +29,11 @@ class ChannelBot {
     setTimeout(async () => {
       this.question = await this.db.get('SELECT id, q, a FROM QUESTIONS ORDER BY random() LIMIT 1');
       await this._postMessage(MessageHelper.makeQuestionMessage(this.question));
-    }, delay || this.settings.nextQuestionGap);
+    }, isNaN(delay) ? this.settings.nextQuestionGap : delay);
   };
 
   async run() {
-    await this._nextQuestion(1);
+    await this._nextQuestion(0);
     while (true) {
       var message = await this.reader.get();
       var haveQuestion = this.question != null;
@@ -57,7 +57,7 @@ class ChannelBot {
           }
           break;
         case haveQuestion:
-          if (this.question.a.toLowerCase() === message.text.toLowerCase()) {
+          if (this.question.a.toLowerCase().trim() === message.text.toLowerCase().trim()) {
             this.scores[user.name] = (this.scores[user.name] || 0) + 1;
             Utils.saveScores(this.channelId, this.scores);
             await this._postMessage(MessageHelper.makeCorrectAnswerMessage(this.question, user, this.scores[user.name]));
