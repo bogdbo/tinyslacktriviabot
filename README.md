@@ -29,7 +29,7 @@ node v7.8.0+
  ```
  > Create a new `<Slack_Bot_Token>` here https://my.slack.com/services/new/bot
 
- > Create a new `triviaDbUrl` here https://opentdb.com/api_config.php (!Important: use url encoding)
+ > Create a new `triviaDbUrl` here https://opentdb.com/api_config.php (*use url encoding*)
  
  2. Import module & run
  
@@ -41,6 +41,7 @@ bot.run()
 ## History
 
 v2.0.0 - opentdb support
+
 v1.0.0 - Initial version
 
 ## License
