@@ -7,8 +7,8 @@ class MessageHelper {
       attachments: [{
         'fallback': 'hint',
         'color': '#ffdd00',
-        'title': Utils.makeHint(question.a),
-        'footer': `${question.a.length} letters`
+        'title': Utils.makeHint(question.answer),
+        'footer': `${question.answer.length} letter${question.answer.length > 1 ? 's' : ''}`
       }]
     }
   }
@@ -19,13 +19,13 @@ class MessageHelper {
       attachments: [{
         'fallback': 'question',
         'color': '#ff4828',
-        'author_name': 'Next question',
-        'title': `${question.q}`,
-        'footer': `${question.a.length} letters`,
+        'author_name': `${question.category} - ${question.points} point${question.points > 1 ? 's' : ''}`,
+        'title': `${question.question}`,
+        'footer': `${question.answer.length} letter${question.answer.length > 1 ? 's' : ''}`,
         'fields': [
           {
             'title': '',
-            'value': `Hint: ${Utils.makeHint(question.a)}`,
+            'value': `Hint: ${Utils.makeHint(question.answer)}`,
             'short': false
           }
         ]
@@ -40,8 +40,8 @@ class MessageHelper {
         'fallback': 'correct',
         'color': '#00bf3c',
         'author_name': 'Congratulations',
-        'title': `@${user.name} answered correctly: ${question.a}`,
-        'footer': `${points} points`
+        'title': `@${user.name} answered correctly: ${question.answer}`,
+        'footer': `${points} points (+${question.points} point${question.points > 1 ? 's' : ''})`
       }]
     }
   }
@@ -64,7 +64,7 @@ class MessageHelper {
         'fallback': 'skipped',
         'color': '#ededed',
         'author_name': 'Question skipped',
-        'title': `A: ${question.a}`
+        'title': `A: ${question.answer}`
       }]
     }
   }

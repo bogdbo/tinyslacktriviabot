@@ -1,6 +1,7 @@
 var MessageReader = require('./../messageReader.js')
 var Utils = require('./../utils.js')
 var MessageHelper = require('./../messageHelper.js')
+var TriviaDbRepository = require('./../repository/TriviaDbRepository.js')
 
 class TinyBotBase {
   constructor (db, slackBot, channelId, settings) {
@@ -13,10 +14,14 @@ class TinyBotBase {
     this.skips = {}
     this.settings = {
       showScoreInterval: 10,
-      nextQuestionGap: 5000
+      nextQuestionGap: 5000,
+      skipCount: 2,
+      triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986'
     }
     Object.assign(this.settings, settings)
     this.showScoreCounter = this.settings.showScoreInterval
+
+    this.questionRepository = new TriviaDbRepository(this.settings.triviaDbUrl)
   }
 
   async postMessage (params) {
@@ -40,18 +45,18 @@ class TinyBotBase {
   }
 
   checkAnswer (message) {
-    return this.question.a.toLowerCase().trim() === message.text.toLowerCase().trim()
+    return this.question.answer.toLowerCase().trim() === message.text.toLowerCase().trim()
   }
 
-  addPoint (user) {
-    this.scores[user.name] = (this.scores[user.name] || 0) + 1
+  addPoint (user, points = 1) {
+    this.scores[user.name] = (this.scores[user.name] || 0) + points
   }
 
   async nextQuestion (delay) {
     this.question = null
     this.skips = {}
     setTimeout(async() => {
-      this.question = await this.db.get('SELECT id, q, a FROM QUESTIONS ORDER BY random() LIMIT 1')
+      this.question = await this.questionRepository.getQuestion()
       await this.postMessage(MessageHelper.makeQuestionMessage(this.question))
     }, isNaN(delay) ? this.settings.nextQuestionGap : delay)
   }
@@ -84,7 +89,7 @@ class TinyBotBase {
 
   async handleAnswer (user, message) {
     if (this.checkAnswer(message)) {
-      this.addPoint(user)
+      this.addPoint(user, this.question.points)
       Utils.saveScores(this.channelId, this.scores)
       await this.postMessage(MessageHelper.makeCorrectAnswerMessage(this.question, user, this.scores[user.name]))
       this.tryShowScores()

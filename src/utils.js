@@ -7,8 +7,8 @@ class Utils {
       return 'answer is too short'
     }
 
-    var answerWithoutSpaces = answer.replace(/\s/g, '')
-    var readableCharsLength = answerWithoutSpaces.length
+    var answerWithoutSings = answer.replace(/[^a-z0-9]/g, '')
+    var readableCharsLength = answerWithoutSings.length
     var hintCharsLenght = Math.ceil(readableCharsLength * 40 / 100) // move 40% to settings as hintCharactersPercen
     var visibleIndexes = []
     while (visibleIndexes.length < hintCharsLenght) {
@@ -22,7 +22,7 @@ class Utils {
     var answerArray = [...answer]
     for (var i = 0; i < answerArray.length; i++) {
       // Replace hidden indexes with '⁎' and keep whitespace
-      if (visibleIndexes.indexOf(i) === -1 && /\s/.test(answerArray[i]) === false) {
+      if (visibleIndexes.indexOf(i) === -1 && /[^a-z0-9]/.test(answerArray[i]) === false) {
         answerArray[i] = '*'
       }
     }

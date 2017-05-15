@@ -12,6 +12,7 @@ class MessageReader {
       if (data.type === MessageTypes.Message && data.channel === channelId && data.user != null) {
         if (this.promiseResolveFn) {
           this.promiseResolveFn(data)
+          this.promiseResolveFn = null
         } else {
           console.warn('promiseResolveFn is null')
         }
