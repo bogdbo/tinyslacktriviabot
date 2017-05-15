@@ -1,6 +1,6 @@
 {
   "name": "tinyslacktriviabot",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A very simple, small and extendable trivia bot for slack",
   "main": "index.js",
   "scripts": {

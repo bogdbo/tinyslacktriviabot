@@ -2,9 +2,13 @@
 
 A tiny, extensible slack trivia bot
 
+## Requirements
+
+node v7.8.0+
+
 ## Installation
 
-npm install tinyslacktriviabot
+```npm install tinyslacktriviabot```
 
 ## Usage
 
