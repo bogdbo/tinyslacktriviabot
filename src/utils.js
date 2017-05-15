@@ -40,18 +40,20 @@ class Utils {
   }
 
   static loadScores (channelId) {
-    var p = path.resolve(__dirname, `./../data/scores/${channelId}.json`)
+    var p = `./${channelId}.json`
     if (fs.existsSync(p)) {
       var data = fs.readFileSync(p, 'utf8').trim()
+      console.log('Scores loaded')
       return JSON.parse(data)
     }
 
+    console.log('Cannot load scores')
     return {}
   }
 
   static saveScores (channelId, scores) {
     console.log(`Saving scores: ${channelId}`)
-    fs.writeFileSync(path.resolve(__dirname, `./../data/scores/${channelId}.json`), JSON.stringify(scores))
+    fs.writeFileSync(`./${channelId}.json`, JSON.stringify(scores))
   }
 }
 

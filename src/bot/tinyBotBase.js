@@ -16,12 +16,14 @@ class TinyBotBase {
       showScoreInterval: 10,
       nextQuestionGap: 5000,
       skipCount: 2,
-      triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986'
+      hintDelay: 10000,
+      triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
     }
     Object.assign(this.settings, settings)
     this.showScoreCounter = this.settings.showScoreInterval
 
     this.questionRepository = new TriviaDbRepository(this.settings.triviaDbUrl)
+    this.lastHintDate = null
   }
 
   async postMessage (params) {
@@ -58,6 +60,7 @@ class TinyBotBase {
     setTimeout(async() => {
       this.question = await this.questionRepository.getQuestion()
       await this.postMessage(MessageHelper.makeQuestionMessage(this.question))
+      this.lastHintDate = Date.now()
     }, isNaN(delay) ? this.settings.nextQuestionGap : delay)
   }
 
@@ -67,7 +70,10 @@ class TinyBotBase {
   }
 
   async handleHint () {
-    await this.postMessage(MessageHelper.makeHintMessage(this.question))
+    if (Date.now() - this.lastHintDate >= this.settings.hintDelay) {
+      await this.postMessage(MessageHelper.makeHintMessage(this.question))
+      this.lastHintDate = Date.now()
+    }
   }
 
   async tryShowScores () {
