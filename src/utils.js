@@ -1,5 +1,4 @@
 var fs = require('fs')
-var path = require('path')
 
 class Utils {
   static makeHint (answer) {
@@ -7,28 +6,21 @@ class Utils {
       return 'answer is too short'
     }
 
-    var answerWithoutSings = answer.replace(/[^a-z0-9]/g, '')
-    var readableCharsLength = answerWithoutSings.length
-    var hintCharsLenght = Math.ceil(readableCharsLength * 40 / 100) // move 40% to settings as hintCharactersPercen
-    var visibleIndexes = []
-    while (visibleIndexes.length < hintCharsLenght) {
-      var randomIndex = Math.floor(Math.random() * answer.length)
-      if (visibleIndexes.indexOf(randomIndex) !== -1) {
-        continue
-      }
-      visibleIndexes.push(randomIndex)
-    }
+    var answerWithoutSings = answer.replace(/[^a-z\d]/ig, '')
+    var hideCharCount = answerWithoutSings.length - Math.ceil(answerWithoutSings.length * 50 / 100)
 
     var answerArray = [...answer]
-    for (var i = 0; i < answerArray.length; i++) {
-      // Replace hidden indexes with '⁎' and keep whitespace
-      if (visibleIndexes.indexOf(i) === -1 && /[^a-z0-9]/.test(answerArray[i]) === false) {
-        answerArray[i] = '*'
+    while (hideCharCount > 0) {
+      var position = Math.floor(Math.random() * answerArray.length)
+      if (/[^a-z\d]/ig.test(answerArray[position])) {
+        continue
       }
+
+      answerArray[position] = '*'
+      hideCharCount--
     }
 
-    var hint = answerArray.join('')
-    return hint
+    return answerArray.join('')
   }
 
   static loadSettings (p) {
