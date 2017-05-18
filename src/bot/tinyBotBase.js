@@ -1,7 +1,8 @@
 var MessageReader = require('./../messageReader.js')
 var Utils = require('./../utils.js')
 var MessageHelper = require('./../messageHelper.js')
-var TriviaDbRepository = require('./../repository/TriviaDbRepository.js')
+var JsonRepository = require('./../repository/JsonRepository.js')
+var path = require('path')
 
 class TinyBotBase {
   constructor (db, slackBot, channelId, settings) {
@@ -18,11 +19,12 @@ class TinyBotBase {
       skipCount: 2,
       hintDelay: 10000,
       triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
+      filename: path.resolve(__dirname, '../../data/questions.json')
     }
     Object.assign(this.settings, settings)
     this.showScoreCounter = this.settings.showScoreInterval
 
-    this.questionRepository = new TriviaDbRepository(this.settings.triviaDbUrl)
+    this.questionRepository = new JsonRepository(this.settings)
     this.lastHintDate = null
   }
 
