@@ -33,7 +33,7 @@ class JsonRepository extends RepositoryBase {
     question.category = this.entities.encode(question.category)
     question.question = this.entities.decode(question.question)
     question.answer = this.entities.decode(question.answer)
-    question.points = Math.floor(Math.random() * 3) + 1
+    question.points = Math.min(3, Math.ceil(question.answer.length/5))
     return question
   }
 }
