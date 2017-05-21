@@ -9,15 +9,16 @@ class MessageReader {
     this.channelId = channelId
     this.promiseResolveFn = null
     this.entities = new Entities()
+    this.queue = []
 
     slackBot.on(EventNames.Message, data => {
       if (data.type === MessageTypes.Message && data.channel === channelId && data.user != null) {
+        data.text = this.entities.decode(data.text)
+
         if (this.promiseResolveFn) {
-          data.text = this.entities.decode(data.text)
           this.promiseResolveFn(data)
-          this.promiseResolveFn = null
         } else {
-          console.warn('promiseResolveFn is null')
+          this.queue.push(data)
         }
       }
     })
@@ -25,7 +26,11 @@ class MessageReader {
 
   async get () {
     return new Promise((resolve, reject) => {
-      this.promiseResolveFn = resolve
+      if (this.queue.length) {
+        resolve(this.queue.shift())
+      } else {
+        this.promiseResolveFn = resolve
+      }
     })
   }
 }
