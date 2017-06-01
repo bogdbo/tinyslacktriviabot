@@ -7,7 +7,7 @@ class JsonRepository extends RepositoryBase {
     super()
     this.questions = []
     this.entities = new Entities()
-    this.loadQuestions(settings.filename)
+    this.loadQuestions(settings.jsonDbPath)
   }
 
   loadQuestions (filename) {

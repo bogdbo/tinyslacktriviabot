@@ -2,9 +2,10 @@ var RepositoryBase = require('./repositoryBase.js')
 var rp = require('request-promise')
 
 class TriviaDbRepository extends RepositoryBase {
-  constructor (url) {
+  constructor (settings) {
     super()
-    this.url = url
+    this.settings = settings
+    this.url = settings.triviaDbUrl
     this.questions = []
   }
 
