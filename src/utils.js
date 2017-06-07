@@ -3,7 +3,7 @@ var path = require('path')
 
 class Utils {
   static getDefaultSettings () {
-    var rootFolder = process.cwd()
+    var rootFolder = path.resolve(__dirname, './..')
     return {
       showScoreInterval: 10,
       nextQuestionGap: 5000,
