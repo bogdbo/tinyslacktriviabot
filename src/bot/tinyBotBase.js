@@ -1,7 +1,6 @@
 var MessageReader = require('./../messageReader.js')
 var Utils = require('./../utils.js')
 var MessageHelper = require('./../messageHelper.js')
-var path = require('path')
 
 class TinyBotBase {
   constructor (slackBot, channelId, settings) {
@@ -11,17 +10,7 @@ class TinyBotBase {
     this.question = null
     this.scores = Utils.loadScores(this.channelId)
     this.skips = {}
-    this.settings = {
-      showScoreInterval: 10,
-      nextQuestionGap: 5000,
-      skipCount: 2,
-      hintDelay: 10000,
-      repository: './../repository/JsonRepository.js',
-      triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
-      jsonDbPath: path.resolve(__dirname, '../../data/questions.json'),
-      sqlDbPath: path.resolve(__dirname, './data/trivia.db')
-    }
-    Object.assign(this.settings, settings)
+    Object.assign((this.settings = {}), Utils.getDefaultSettings(), settings)
     this.showScoreCounter = this.settings.showScoreInterval
 
     var DynamicRepository = require(this.settings.repository)
@@ -61,7 +50,9 @@ class TinyBotBase {
     this.question = null
     this.skips = {}
     setTimeout(async() => {
-      this.question = await this.questionRepository.getQuestion()
+      do {
+        this.question = await this.questionRepository.getQuestion()
+      } while (!this.validateQuestion(this.question))
       await this.postMessage(MessageHelper.makeQuestionMessage(this.question))
       this.lastHintDate = Date.now()
     }, isNaN(delay) ? this.settings.nextQuestionGap : delay)
@@ -104,6 +95,10 @@ class TinyBotBase {
       this.tryShowScores()
       await this.nextQuestion()
     }
+  }
+
+  validateQuestion (question) {
+    return /(japanese|anime)/gi.test(question.category) === false
   }
 }
 

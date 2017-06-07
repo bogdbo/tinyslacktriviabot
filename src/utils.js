@@ -1,6 +1,21 @@
 var fs = require('fs')
+var path = require('path')
 
 class Utils {
+  static getDefaultSettings () {
+    var rootFolder = process.cwd()
+    return {
+      showScoreInterval: 10,
+      nextQuestionGap: 5000,
+      skipCount: 2,
+      hintDelay: 10000,
+      repository: path.resolve(rootFolder, 'src/repository/JsonRepository.js'),
+      triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
+      jsonDbPath: path.resolve(rootFolder, 'data/questions.json'),
+      sqlDbPath: path.resolve(rootFolder, 'data/trivia.db')
+    }
+  }
+
   static makeHint (answer) {
     if (answer.length <= 2) {
       return 'answer is too short'
