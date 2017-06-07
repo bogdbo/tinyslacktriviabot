@@ -5,6 +5,7 @@ class Utils {
   static getDefaultSettings () {
     var rootFolder = path.resolve(__dirname, './..')
     return {
+      name: 'trivia',
       showScoreInterval: 10,
       nextQuestionGap: 5000,
       skipCount: 2,
