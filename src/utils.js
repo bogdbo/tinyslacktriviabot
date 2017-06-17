@@ -13,30 +13,9 @@ class Utils {
       repository: path.resolve(rootFolder, 'src/repository/JsonRepository.js'),
       triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
       jsonDbPath: path.resolve(rootFolder, 'data/questions.json'),
+      jsDbPath: path.resolve(rootFolder, 'data/jsQuestions.json'),
       sqlDbPath: path.resolve(rootFolder, 'data/trivia.db')
     }
-  }
-
-  static makeHint (answer) {
-    if (answer.length <= 2) {
-      return 'answer is too short'
-    }
-
-    var answerWithoutSings = answer.replace(/[^a-z\d]/ig, '')
-    var hideCharCount = answerWithoutSings.length - Math.ceil(answerWithoutSings.length * 50 / 100)
-
-    var answerArray = [...answer]
-    while (hideCharCount > 0) {
-      var position = Math.floor(Math.random() * answerArray.length)
-      if (/[^a-z\d]/ig.test(answerArray[position])) {
-        continue
-      }
-
-      answerArray[position] = '*'
-      hideCharCount--
-    }
-
-    return answerArray.join('')
   }
 
   static loadSettings (p) {
