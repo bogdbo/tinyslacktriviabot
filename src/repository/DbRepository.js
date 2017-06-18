@@ -11,6 +11,7 @@ class DbRepository extends RepositoryBase {
 
   async getQuestion () {
     if (!db.driver) {
+      console.log('DbRepository: connecting to db')
       await db.open(path.resolve(__dirname, './../../data/trivia.db'))
     }
 

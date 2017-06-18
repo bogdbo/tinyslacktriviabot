@@ -2,18 +2,28 @@ var fs = require('fs')
 var path = require('path')
 
 class Utils {
+  static getRootFolderPath () {
+    return path.resolve(__dirname, './..')
+  }
+
+  static getRepositoriesFolderPath () {
+    return path.resolve(this.getRootFolderPath(), 'src/repository')
+  }
+
   static getDefaultSettings () {
-    var rootFolder = path.resolve(__dirname, './..')
+    const rootFolder = this.getRootFolderPath()
+    const repositoriesFolder = this.getRepositoriesFolderPath()
     return {
       name: 'trivia',
       showScoreInterval: 10,
       nextQuestionGap: 5000,
       skipCount: 2,
       hintDelay: 10000,
-      duckHunt: false,
-      duckHuntMin: 1000 * 60 * 30,
-      duckHuntMax: 1000 * 60 * 60,
-      repository: path.resolve(rootFolder, 'src/repository/JsonRepository.js'),
+      repository: [
+        path.resolve(repositoriesFolder, 'DbRepository.js'),
+        path.resolve(repositoriesFolder, 'TriviaDbRepository.js'),
+        path.resolve(repositoriesFolder, 'JsonRepository.js')
+      ],
       triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
       jsonDbPath: path.resolve(rootFolder, 'data/questions.json'),
       jsDbPath: path.resolve(rootFolder, 'data/jsQuestions.json'),
