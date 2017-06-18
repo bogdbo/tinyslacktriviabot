@@ -1,5 +1,5 @@
-var MessageReader = require('./../messageReader.js')
-var Utils = require('./../utils.js')
+const MessageReader = require('./../messageReader.js')
+const Utils = require('./../utils.js')
 
 class TinyBotBase {
   constructor (slackBot, channelId, settings) {
@@ -35,10 +35,6 @@ class TinyBotBase {
 
   getSkipCount () {
     return Object.keys(this.skips).length
-  }
-
-  checkAnswer (message) {
-    return this.question.answer.toLowerCase().trim() === message.text.toLowerCase().trim()
   }
 
   addPoint (user, points = 1) {
@@ -87,12 +83,21 @@ class TinyBotBase {
   }
 
   async handleAnswer (user, message) {
-    if (this.questionRepository.checkAnswer(this.question, message)) {
+    const response = this.questionRepository.checkAnswer(this.question, message)
+    if (response == null) {
+      return
+    }
+
+    if (response.ok) {
       this.addPoint(user, this.question.points)
       Utils.saveScores(this.channelId, this.scores)
       await this.postMessage(this.questionRepository.makeCorrectAnswerMessage(this.question, user, this.scores[user.name]))
       this.tryShowScores()
       await this.nextQuestion()
+    } else {
+      if (response.message) {
+        await this.postMessage(this.questionRepository.makeInvalidAnswerMessage(user, response))
+      }
     }
   }
 

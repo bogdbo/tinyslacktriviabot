@@ -1,3 +1,5 @@
+const smb = require('slack-message-builder')
+
 class RepositoryBase {
   consturctor () { }
   async getQuestion () {
@@ -5,7 +7,7 @@ class RepositoryBase {
   }
 
   checkAnswer (question, message) {
-    return question.answer.toLowerCase().trim() === message.text.toLowerCase().trim()
+    return { ok: question.answer.toLowerCase().trim() === message.text.toLowerCase().trim() }
   }
 
   /* Start Message Helpers */
@@ -74,6 +76,13 @@ class RepositoryBase {
         'footer': `${points} points (+${question.points} point${question.points > 1 ? 's' : ''})`
       }]
     }
+  }
+
+  makeInvalidAnswerMessage (user, response) {
+    return smb()
+      .icon_emoji(':warning:')
+      .text(response.message)
+      .json()
   }
 
   makeSkipMessage (user, skipsLeft) {
