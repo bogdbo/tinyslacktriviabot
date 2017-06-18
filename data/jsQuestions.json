@@ -1,7 +1,7 @@
 [
   {
     "question": "```Implement function run(array) which returns the array sorted```",
-    "points": 1,
+    "points": 7,
     "validators": [
       "_.isEqual(run([3,2,1]), [1,2,3])",
       "_.isEqual(run([1,3,1,2]), [1,1,2,3])",
@@ -10,7 +10,7 @@
   },
   {
     "question": "```Implement a function run(a,b) that builds an array with values between a and b (inclusive)\neg:run(3,5) => [3,4,5]```",
-    "points": 1,
+    "points": 7,
     "validators": [
       "_.isEqual(run(1,5), [1,2,3,4,5])",
       "_.isEqual(run(1,2), [1,2])"
@@ -18,7 +18,7 @@
   },
   {
     "question": "```Implement function run(obj) which returns true if obj is an array, false otherwise```",
-    "points": 1,
+    "points": 8,
     "validators": [
       "run(1) == false",
       "run([]) == true",
@@ -27,12 +27,31 @@
     ]
   },
   {
-    "question": "```Write a JavaScript function run(input, n) which returns an array of the first n elements in input ```",
-    "points": 1,
+    "question": "```Write a JavaScript function run(input, n) which returns an array of the first n elements in input```",
+    "points": 10,
     "validators": [
       "_.isEqual(run([1,2,3,4], 1), [1])",
       "_.isEqual(run([1,2,3,4], 2), [1,2])",
       "_.isEqual(run([1,2,3,4], 5), [1,2,3,4])"
+    ]
+  },
+  {
+    "question": "```Write a JavaScript function run(text) the oposite of text (palindrome)\neg: test => tset```",
+    "points": 8,
+    "validators": [
+      "run('test') === 'tset'",
+      "run('abcd') === 'dcba'",
+      "run('12345abc') === 'cba54321'"
+    ]
+  },
+  {
+    "question": "```Write an ES6 generator run(n) which returns a number greater than the last by 5 starting from n\neg: run(3) => [3,8,13,18,... infinity]```",
+    "points": 15,
+    "validators": [
+      "var t = run(3); t.next().value == 3",
+      "var t = run(8); t.next().value == 8",
+      "var t = run(10); t.next(); t.next(); t.next().value == 20",
+      "var count = Math.floor((Math.random() * 10)) + 1; var count2 = count; var f = null; var t = run(5); while(count-->0) { f = t.next(); }; f.value == count2 * 5"
     ]
   }
 ]

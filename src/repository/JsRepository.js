@@ -8,13 +8,13 @@ class JsRepository extends RepositoryBase {
   constructor (settings) {
     super()
     this.codeBlock = '```'
-    this.vmSettings = { timeout: 5 }
+    this.vmSettings = { timeout: 1000 }
     this.questions = []
     this.loadQuestions(settings.jsDbPath)
   }
 
   loadQuestions (filename) {
-    console.log('JsonRepository: loading questions')
+    console.log('JsRepository: loading questions')
     if (filename && fs.existsSync(filename)) {
       this.questions = JSON.parse(fs.readFileSync(filename, 'utf8').trim())
       this.questions = this.questions
@@ -73,7 +73,7 @@ class JsRepository extends RepositoryBase {
   makeQuestionMessage (question) {
     return smb()
       .iconEmoji(':question:')
-      .text('*New question* ' + question.question)
+      .text(`${question.question} *\`${question.points} points\`*  `)
       .json()
   }
 
@@ -92,12 +92,38 @@ class JsRepository extends RepositoryBase {
 
   makeInvalidAnswerMessage (user, response) {
     return smb()
-      .iconEmoji(':warning:')
+      .iconEmoji(':bug:')
       .attachment()
         .color('#ff00fa')
         .footer(response.message)
         .end()
       .json()
+  }
+
+  makeAfterSkipMessage (question) {
+    return {
+      icon_emoji: ':fast_forward:',
+      attachments: [{
+        'fallback': 'skipped',
+        'color': '#ededed',
+        'author_name': 'Question skipped'
+      }]
+    }
+  }
+
+  makeHint (answer) {
+    return 'No hints for programming questions, google is your buddy'
+  }
+
+  makeHintMessage (question) {
+    return {
+      icon_emoji: ':bulb:',
+      attachments: [{
+        'fallback': 'hint',
+        'color': '#ffdd00',
+        'title': this.makeHint(question.answer)
+      }]
+    }
   }
   /* End Message Helpers */
 }

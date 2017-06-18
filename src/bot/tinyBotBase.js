@@ -1,4 +1,5 @@
 const MessageReader = require('./../messageReader.js')
+const RepositoryProxy = require('./../repository/repositoryProxy.js')
 const Utils = require('./../utils.js')
 
 class TinyBotBase {
@@ -12,8 +13,7 @@ class TinyBotBase {
     Object.assign((this.settings = {}), Utils.getDefaultSettings(), settings)
     this.showScoreCounter = this.settings.showScoreInterval
 
-    const DynamicRepository = require(this.settings.repository)
-    this.questionRepository = new DynamicRepository(this.settings)
+    this.questionRepository = new RepositoryProxy(this.settings)
     this.lastHintDate = null
   }
 
