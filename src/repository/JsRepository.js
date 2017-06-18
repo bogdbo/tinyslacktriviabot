@@ -45,32 +45,58 @@ class JsRepository extends RepositoryBase {
     snippet = snippet.slice(0, snippet.lastIndexOf(this.codeBlock))
 
     let validatorIndex = 0
-    let result = true && question.validators.length > 0
-    while (result && validatorIndex < question.validators.length) {
-      result = result && this.validateQuestion(snippet, question.validators[validatorIndex++])
+    const response = { ok: question.validators.length > 0, message: 'No validators' }
+    while (response.ok && validatorIndex < question.validators.length) {
+      Object.assign(response, this.validateQuestion(snippet, question.validators[validatorIndex++]))
     }
 
-    return result
+    return response
   }
 
   validateQuestion (snippet, validator) {
     let context = vm.createContext()
+    const response = { ok: false, message: 'N/A' }
     try {
       vm.runInContext(snippet, context, this.vmSettings)
       context._ = _
-      return vm.runInContext(validator, context, this.vmSettings)
+      response.message = `Failed: ${validator}`
+      response.ok = !!vm.runInContext(validator, context, this.vmSettings)
     } catch (ex) {
-      // todo: show invalid question message
+      response.message = ex.message || ex
+      response.ok = false
     }
 
-    return false
+    return response
   }
 
   /* Start Message Helpers */
   makeQuestionMessage (question) {
     return smb()
       .iconEmoji(':question:')
-      .text(question.question)
+      .text('*New question* ' + question.question)
+      .json()
+  }
+
+  makeCorrectAnswerMessage (question, user, points) {
+    return {
+      icon_emoji: ':tada:',
+      attachments: [{
+        'fallback': 'correct',
+        'color': '#00bf3c',
+        'author_name': 'Congratulations',
+        'title': `@${user.name} answered correctly`,
+        'footer': `${points} points (+${question.points} point${question.points > 1 ? 's' : ''})`
+      }]
+    }
+  }
+
+  makeInvalidAnswerMessage (user, response) {
+    return smb()
+      .iconEmoji(':warning:')
+      .attachment()
+        .color('#ff00fa')
+        .footer(response.message)
+        .end()
       .json()
   }
   /* End Message Helpers */
