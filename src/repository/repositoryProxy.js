@@ -35,7 +35,6 @@ class RepositoryProxy {
   }
 
   resolveRepositoryPath (repository) {
-    // If it comes from Utils.getDefaultSettings
     if (path.isAbsolute(repository)) {
       return repository
     }
