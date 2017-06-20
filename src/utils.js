@@ -19,6 +19,7 @@ class Utils {
       nextQuestionGap: 5000,
       skipCount: 2,
       hintDelay: 10000,
+      autoSkipAfter: 30000,
       repository: [
         path.resolve(repositoriesFolder, 'DbRepository.js'),
         path.resolve(repositoriesFolder, 'TriviaDbRepository.js'),

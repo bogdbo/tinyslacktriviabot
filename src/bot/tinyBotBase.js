@@ -15,6 +15,7 @@ class TinyBotBase {
 
     this.questionRepository = new RepositoryProxy(this.settings)
     this.lastHintDate = null
+    this.skipHandle = null
   }
 
   async postMessage (params) {
@@ -42,15 +43,17 @@ class TinyBotBase {
   }
 
   async nextQuestion (delay) {
+    clearTimeout(this.skipHandle)
     this.question = null
     this.skips = {}
     setTimeout(async() => {
       do {
         this.question = await this.questionRepository.getQuestion()
+        this.questionChangedDate = Date.now()
       } while (!this.validateQuestion(this.question))
       await this.postMessage(this.questionRepository.makeQuestionMessage(this.question))
-      this.lastHintDate = Date.now()
-    }, isNaN(delay) ? this.settings.nextQuestionGap : delay)
+      this.skipHandle = setTimeout(this.skipQuestion.bind(this), Math.max(3000, this.settings.autoSkipAfter))
+    }, Number.isSafeInteger(delay) ? delay : this.settings.nextQuestionGap)
   }
 
   async handleScores () {
@@ -75,11 +78,15 @@ class TinyBotBase {
   async handleSkip (user) {
     this.markSkipped(user)
     if (this.getSkipCount() >= this.settings.skipCount) {
-      await this.postMessage(this.questionRepository.makeAfterSkipMessage(this.question))
-      await this.nextQuestion()
+      this.skipQuestion()
     } else {
       await this.postMessage(this.questionRepository.makeSkipMessage(user, this.settings.skipCount - this.getSkipCount()))
     }
+  }
+
+  async skipQuestion () {
+    await this.postMessage(this.questionRepository.makeAfterSkipMessage(this.question))
+    await this.nextQuestion()
   }
 
   async handleAnswer (user, message) {
