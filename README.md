@@ -64,6 +64,7 @@ bot.run()
 | nextQuestionGap | Delay until next question is shown _(eg. after correct answer or skip)_ |
 | skipCount | Required skips to change question |
 | hintDelay | How often the hint command can be called |
+| autoSkipAfter | Delay until question is automatically skipped, default 30000ms |
 | repository | Specify the preferred repositories (bold ones are the default value): ["**DbRepository.js**", "**TriviaDbRepository.js**", "**JsonRepository.js**", "JsRepository.js"] |
 | triviaDbUrl | Url required by TriviaDbRepository. Url needs to contain **&encode=url3986** |
 | _*jsonDbPath_ | Local path to a json file; required by JsonRepository |
