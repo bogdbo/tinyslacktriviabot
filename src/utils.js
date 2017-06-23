@@ -20,6 +20,7 @@ class Utils {
       skipCount: 2,
       hintDelay: 10000,
       autoSkipAfter: 30000,
+      filters: [],
       repository: [
         path.resolve(repositoriesFolder, 'DbRepository.js'),
         path.resolve(repositoriesFolder, 'TriviaDbRepository.js'),

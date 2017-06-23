@@ -109,7 +109,8 @@ class TinyBotBase {
   }
 
   validateQuestion (question) {
-    return /(japanese|anime)/gi.test(question.category) === false
+    const qstr = JSON.stringify(question)
+    return this.settings.filters.every(f => !new RegExp(f, 'ig').test(qstr))
   }
 }
 
