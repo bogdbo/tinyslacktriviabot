@@ -28,6 +28,7 @@ class Utils {
       ],
       triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
       jsonDbPath: path.resolve(rootFolder, 'data/questions.json'),
+      hsDbPath: path.resolve(rootFolder, 'data/hs.json'),
       jsDbPath: path.resolve(rootFolder, 'data/jsQuestions.json'),
       sqlDbPath: path.resolve(rootFolder, 'data/trivia.db')
     }

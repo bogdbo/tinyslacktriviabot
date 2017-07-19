@@ -30,7 +30,7 @@ class JsonRepository extends RepositoryBase {
   }
 
   mapQuestion (question) {
-    question.category = this.entities.encode(question.category)
+    question.category = this.entities.encode(question.category) || 'N/A'
     question.question = this.entities.decode(question.question)
     question.answer = this.entities.decode(question.answer)
     question.points = Math.min(3, Math.ceil(question.answer.length / 7))
