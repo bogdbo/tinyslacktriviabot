@@ -24,7 +24,8 @@ class Utils {
       repository: [
         path.resolve(repositoriesFolder, 'DbRepository.js'),
         path.resolve(repositoriesFolder, 'TriviaDbRepository.js'),
-        path.resolve(repositoriesFolder, 'JsonRepository.js')
+        path.resolve(repositoriesFolder, 'JsonRepository.js'),
+        path.resolve(repositoriesFolder, 'HsRepository.js')
       ],
       triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
       jsonDbPath: path.resolve(rootFolder, 'data/questions.json'),
