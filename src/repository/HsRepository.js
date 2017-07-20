@@ -9,20 +9,20 @@ class HearthstoneRepository extends RepositoryBase {
     this.currentQuestion = null
     this.imgUrlRoot = 'https://art.hearthstonejson.com/v1/render/latest/enUS/256x/'
     this.availableProperties = {
-      'cardClass': '',
-      'cost': ':small_blue_diamond:',
-      'type': '',
       'attack': ':crossed_swords:',
-      'faction': '',
       'health': ':heart:',
+      'cost': ':small_blue_diamond:',
       'mechanics': ':gear:',
-      'rarity': ':gem:',
       'durability': ':shield:',
+      'spellDamage': ':sparkles:',
+      'rarity': ':gem:',
       'overload': ':comet:',
-      'classes': '',
-      'spellDamage': ':sparkles:'
+      'cardClass': '',
+      'type': '',
+      'faction': '',
+      'classes': ''
     }
-    this.numberOfHintFields = 3
+    this.numberOfHintFields = 4
   }
 
   loadQuestions (filename) {
@@ -69,7 +69,7 @@ class HearthstoneRepository extends RepositoryBase {
 
   makeQuestionMessage (question) {
     var questionMessage = super.makeQuestionMessage(question)
-    questionMessage.attachments[0].fields = questionMessage.attachments[0].fields.concat(this.makeHintFields(question))
+    questionMessage.attachments[0].fields = questionMessage.attachments[0].fields.concat(this.makeHintFields(question, true))
     return questionMessage
   }
 
@@ -79,23 +79,22 @@ class HearthstoneRepository extends RepositoryBase {
     return correctMessage
   }
 
-  makeHintFields (question) {
+  makeHintFields (question, ordered = false) {
     let result = []
     let count = this.numberOfHintFields
     let props = Object.keys(this.availableProperties) // clone availableProperties
     while (count > 0 && props.length) {
-      const randomPropIndex = Math.floor(Math.random() * props.length)
-      const randomProp = props.splice(randomPropIndex, 1)[0]
+      const propIndex = ordered ? 0 : Math.floor(Math.random() * props.length)
+      const randomProp = props.splice(propIndex, 1)[0]
       if (question[randomProp]) {
         count--
         result.push({
-          'title': randomProp + ' ' + this.availableProperties[randomProp],
+          'title': randomProp.toLowerCase() + ' ' + this.availableProperties[randomProp],
           'value': Array.isArray(question[randomProp]) ? question[randomProp].join(', ') : question[randomProp],
           'short': true
         })
       }
     }
-    result.sort((a, b) => a.title < b.title)
     return result
   }
 }
