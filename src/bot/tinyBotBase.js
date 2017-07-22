@@ -108,6 +108,10 @@ class TinyBotBase {
   }
 
   validateQuestion (question) {
+    if (!question.answer) {
+      return false
+    }
+
     const qstr = JSON.stringify(question)
     return this.settings.filters.every(f => !new RegExp(f, 'ig').test(qstr))
   }
