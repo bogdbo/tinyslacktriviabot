@@ -46,6 +46,7 @@ class RepositoryBase {
   }
 
   makeQuestionMessage (question) {
+    let imageUrls = question.question.match(/(https?:\/\/.+?\.(?:png|jpe?g))/ig)
     return {
       icon_emoji: ':question:',
       attachments: [{
@@ -60,7 +61,8 @@ class RepositoryBase {
             'value': `Hint: ${this.makeHint(question.answer)}`,
             'short': false
           }
-        ]
+        ],
+        'image_url': imageUrls && imageUrls.length ? imageUrls[0] : null
       }]
     }
   }

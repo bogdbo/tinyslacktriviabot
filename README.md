@@ -2,6 +2,9 @@
 
 A tiny, extensible slack trivia bot
 
+![version](https://badge.fury.io/js/tinyslacktriviabot.png)
+![dependencies](https://david-dm.org/troggzor/tinyslacktriviabot/status.svg)
+
 <img src="http://i.imgur.com/p3nz1Pn.png" height="450px">
 
 ## Requirements
@@ -15,7 +18,7 @@ node v8
 
 ## Usage
 
-#### Create a file `trivia.js` and run it  with `node trivia.js`
+#### Create a file `trivia.js` and run it with `node trivia.js`
 
 ##### Minimum configuration 
 ```js
@@ -27,6 +30,10 @@ const config = {
 }
 TinySlackTriviaBot.run(config)
 ```
+> Get a `<SLACK_BOT_TOKEN>` here https://my.slack.com/services/new/bot
+
+> Note: configuration can also be stored in a file `config.json` in the same folder as `trivia.js`
+ 
 ##### All databases included configuration
 ```js
 const { TinySlackTriviaBot } = require('tinyslacktriviabot');
@@ -71,37 +78,20 @@ const config = {
       'dbPath': 'capitals.json',
       'questionPath': ['text'],
       'answerPath': [['answers', 0, 'text', 0]]
+    },
+    {
+      'ignore': false,
+      'path': 'JsonRepository.js',
+      'dbPath': 'flags.json',
+      'questionPath': ['text'],
+      'answerPath': [['answers', 0, 'text', 0]]
     }]
 }
 TinySlackTriviaBot.run(config)
 ```
 
- > Get a `<SLACK_BOT_TOKEN>` here https://my.slack.com/services/new/bot
-
- > Note: configuration can also be stored in a file `config.json` in the same folder as `trivia.js`
 
 ## Advanced configuration
-### Default configuration
-```js
-{
-  name: 'trivia',
-  token: '<SLACK_BOT_TOKEN>',
-  channels: ['<SLACK_CHANNEL_ID>']
-  showScoreInterval: 10,
-  nextQuestionGap: 5000,
-  skipCount: 2,
-  hintDelay: 10000,
-  autoSkipAfter: 30000,
-  filters: [],
-  repository: [
-	{ 'path': 'DbRepository.js' },
-	{ 'path': 'TriviaDbRepository.js' },
-	{ 'path': 'JsonRepository.js' },
-	{ 'path': 'HsRepository.js' },
-	{ 'path': 'JsRepository.js' }
-  ]
-}
-```
 
 ### Configuration details
 <table>
@@ -158,7 +148,13 @@ TinySlackTriviaBot.run(config)
     <td>repository</td>
     <td>array of RepositorySettings</td>
     <td>Configure preferred repositories</td>
-    <td><code>[{'path':'DbRepository.js'},<br/>{'path':'TriviaDbRepository.js'},<br/>{'path':'JsonRepository.js'},<br/>{'path':'HsRepository.js'},<br/>{'path':'JsRepository.js'}]</code></td>
+    <td><pre>[{'path':'DbRepository.js'},
+{'path':'TriviaDbRepository.js'},
+{'path':'JsonRepository.js'},
+{'path':'HsRepository.js'},
+{'path':'JsRepository.js'}]
+    </pre>
+    </td>
   </tr>
 </tbody>
 </table>
@@ -182,13 +178,13 @@ TinySlackTriviaBot.run(config)
      	<code>'path': 'C:\\CustomRepository.js'</code> <br/>
         <b>When using absolute paths the '\' character needs to be escaped</b><br/><br/>
         OOTB repositories<br/>
-		<code>
-        'path': 'JsonRepository.js'<br/>
-        'path': 'DbRepository.js'<br/>
-        'path': 'HsRepository.js'<br/>
-        'path': 'JsRepository.js'<br/>
+		<pre>
+        'path': 'JsonRepository.js'
+        'path': 'DbRepository.js'
+        'path': 'HsRepository.js'
+        'path': 'JsRepository.js'
         'path': 'TriviaDbRepository.js'
-        </code>
+        </pre>
     </td>
   </tr>
   <tr>
@@ -252,14 +248,11 @@ TinySlackTriviaBot.run(config)
 #### JsonRepositorySettings
 Assume the question object from JSON has the following format
 ```json
-question =
-{
-"text":"question text",
-"answers":["first answer","second answer"],
-"parent": {
-             "group":"category name"
-          }
-}
+question = {
+              "text":"question text",
+              "answers":["first answer", "second answer"],
+              "parent": { "group":"category name" }
+            }
 ```
 
 Note: Property paths are evaluated using [object-path](https://github.com/mariocasciaro/object-path#usage). Internally, tinyslacktriviabot uses the `coalesce` function.
@@ -330,7 +323,8 @@ Note: Property paths are evaluated using [object-path](https://github.com/marioc
 * Hearthstone respository
 
 <img src="https://i.imgur.com/r9YmnM5.png" height="350px">
-* World of warcraft and Jeopardy json databases
+
+* World of warcraft, Jeopardy, country flags and country capitals json databases
 * Export base models for easier extensibility
 
 

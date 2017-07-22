@@ -43,6 +43,22 @@ class Utils {
         },
         {
           'path': path.resolve(repositoriesFolder, 'JsRepository.js')
+        },
+        {
+          'path': path.resolve(repositoriesFolder, 'JsonRepository.js'),
+          'dbPath': 'jeopardy.json'
+        },
+        {
+          'path': path.resolve(repositoriesFolder, 'JsonRepository.js'),
+          'dbPath': 'capitals.json',
+          'questionPath': ['text'],
+          'answerPath': [['answers', 0, 'text', 0]]
+        },
+        {
+          'path': path.resolve(repositoriesFolder, 'JsonRepository.js'),
+          'dbPath': 'flags.json',
+          'questionPath': ['text'],
+          'answerPath': [['answers', 0, 'text', 0]]
         }
       ]
     }
