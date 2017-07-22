@@ -1,6 +1,7 @@
 const RepositoryBase = require('./repositoryBase.js')
 const fs = require('fs')
 const path = require('path')
+const Utils = require('./../utils.js')
 
 class HearthstoneRepository extends RepositoryBase {
   constructor (repositorySettings, settings) {
@@ -28,6 +29,7 @@ class HearthstoneRepository extends RepositoryBase {
 
   loadQuestions (filename) {
     console.log('HearthstoneRepository: loading questions')
+    filename = Utils.resolveDbPath(filename)
     if (filename && fs.existsSync(filename)) {
       this.questions = JSON.parse(fs.readFileSync(filename, 'utf8').trim())
       this.questions = this.questions.map(q => this.mapQuestion(q)).filter(q => q != null)

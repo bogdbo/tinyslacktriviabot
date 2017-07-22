@@ -4,6 +4,7 @@ const vm = require('vm')
 const _ = require('lodash')
 const smb = require('slack-message-builder')
 const path = require('path')
+const Utils = require('./../utils.js')
 
 class JsRepository extends RepositoryBase {
   constructor (repositorySettings, settings) {
@@ -16,6 +17,7 @@ class JsRepository extends RepositoryBase {
 
   loadQuestions (filename) {
     console.log('JsRepository: loading questions')
+    filename = Utils.resolveDbPath(filename)
     if (filename && fs.existsSync(filename)) {
       this.questions = JSON.parse(fs.readFileSync(filename, 'utf8').trim())
       this.questions = this.questions

@@ -6,6 +6,14 @@ class Utils {
     return path.resolve(__dirname, './..')
   }
 
+  static resolveDbPath (dbPath) {
+    if (path.isAbsolute(dbPath)) {
+      return dbPath
+    } else {
+      return path.resolve(this.getRootFolderPath(), `data/${dbPath}`)
+    }
+  }
+
   static getRepositoriesFolderPath () {
     return path.resolve(this.getRootFolderPath(), 'src/repository')
   }

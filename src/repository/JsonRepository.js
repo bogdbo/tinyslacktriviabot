@@ -3,6 +3,7 @@ const fs = require('fs')
 const Entities = require('html-entities').AllHtmlEntities
 const objectPath = require('object-path')
 const path = require('path')
+const Utils = require('./../utils.js')
 
 class JsonRepository extends RepositoryBase {
   constructor (repositorySettings, settings) {
@@ -15,6 +16,7 @@ class JsonRepository extends RepositoryBase {
 
   loadQuestions (filename) {
     console.log('JsonRepository: loading questions')
+    filename = Utils.resolveDbPath(filename)
     if (filename && fs.existsSync(filename)) {
       this.questions = JSON.parse(fs.readFileSync(filename, 'utf8').trim())
       this.questions = this.questions.map(q => this.mapQuestion(q))

@@ -10,8 +10,8 @@ const TriviaDbRepository = require('./src/repository/TriviaDbRepository.js')
 const HsRepository = require('./src/repository/HsRepository.js')
 
 class TinySlackTriviaBot {
-  static async run () {
-    const settings = Utils.loadSettings('./config.json')
+  static async run (settings) {
+    settings = settings || Utils.loadSettings('./config.json')
     const bot = new SlackBot({ token: settings.token, name: 'trivia' })
 
     bot.on(EventNames.Open, async () => {

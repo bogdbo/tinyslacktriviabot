@@ -1,2 +1,2 @@
-const bot = require('./index.js')
-bot.run()
+const { TinySlackTriviaBot } = require('./../tinytrivia')
+TinySlackTriviaBot.run()
