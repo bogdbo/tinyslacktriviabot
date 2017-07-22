@@ -1,6 +1,6 @@
-var EventNames = require('./constants.js').EventNames
-var MessageTypes = require('./constants.js').MessageTypes
-var Entities = require('html-entities').AllHtmlEntities
+const EventNames = require('./constants.js').EventNames
+const MessageTypes = require('./constants.js').MessageTypes
+const Entities = require('html-entities').AllHtmlEntities
 
 // Simple wrapper to convert Emit messages to Promises so we can use async/await for cleaner code
 class MessageReader {

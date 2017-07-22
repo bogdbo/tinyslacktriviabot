@@ -16,12 +16,12 @@ class RepositoryBase {
       return 'answer is too short'
     }
 
-    var answerWithoutSings = answer.replace(/[^a-z\d]/ig, '')
-    var hideCharCount = answerWithoutSings.length - Math.ceil(answerWithoutSings.length * 50 / 100)
+    const answerWithoutSings = answer.replace(/[^a-z\d]/ig, '')
+    let hideCharCount = answerWithoutSings.length - Math.ceil(answerWithoutSings.length * 50 / 100)
 
-    var answerArray = [...answer]
+    const answerArray = [...answer]
     while (hideCharCount > 0) {
-      var position = Math.floor(Math.random() * answerArray.length)
+      const position = Math.floor(Math.random() * answerArray.length)
       if (/[^a-z\d]/ig.test(answerArray[position])) {
         continue
       }
@@ -109,7 +109,7 @@ class RepositoryBase {
   }
 
   makeScoresMessage (scores) {
-    var scoresString = Object.keys(scores)
+    const scoresString = Object.keys(scores)
       .slice(0, 10)
       .sort((a, b) => scores[b] - scores[a])
       .map((user, i) => `${i + 1}. @${user} - ${scores[user]}`)

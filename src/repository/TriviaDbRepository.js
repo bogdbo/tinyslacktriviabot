@@ -1,11 +1,11 @@
-var RepositoryBase = require('./repositoryBase.js')
-var rp = require('request-promise')
+const RepositoryBase = require('./repositoryBase.js')
+const rp = require('request-promise')
 
 class TriviaDbRepository extends RepositoryBase {
-  constructor (settings) {
+  constructor (repositorySettings, settings) {
     super()
     this.settings = settings
-    this.url = settings.triviaDbUrl
+    this.dbPath = repositorySettings.dbPath || 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986'
     this.questions = []
   }
 
@@ -20,11 +20,11 @@ class TriviaDbRepository extends RepositoryBase {
   async loadQuestions () {
     try {
       console.log('TriviaDbRepository: loading new batch of questions')
-      var response = await rp(this.url)
-      var data = JSON.parse(response)
+      const response = await rp(this.dbPath)
+      const data = JSON.parse(response)
       this.questions = data.results.map((q) => this.mapQuestion(q))
     } catch (exception) {
-      console.error(`cannot get questions from ${this.url}. Exception: ${exception}. Retrying...`)
+      console.error(`cannot get questions from ${this.dbPath}. Exception: ${exception}. Retrying...`)
       this.loadQuestions()
     }
   }

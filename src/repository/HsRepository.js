@@ -1,11 +1,12 @@
-var RepositoryBase = require('./repositoryBase.js')
-var fs = require('fs')
+const RepositoryBase = require('./repositoryBase.js')
+const fs = require('fs')
+const path = require('path')
 
 class HearthstoneRepository extends RepositoryBase {
-  constructor (settings) {
+  constructor (repositorySettings, settings) {
     super()
     this.questions = []
-    this.loadQuestions(settings.hsDbPath)
+    this.loadQuestions(repositorySettings.dbPath || path.resolve(__dirname, './../../data/hs.json'))
     this.currentQuestion = null
     this.imgUrlRoot = 'https://art.hearthstonejson.com/v1/render/latest/enUS/256x/'
     this.availableProperties = {
@@ -62,19 +63,19 @@ class HearthstoneRepository extends RepositoryBase {
   }
 
   makeHintMessage (question) {
-    var hint = super.makeHintMessage(question)
+    const hint = super.makeHintMessage(question)
     hint.attachments[0].fields = this.makeHintFields(question)
     return hint
   }
 
   makeQuestionMessage (question) {
-    var questionMessage = super.makeQuestionMessage(question)
+    const questionMessage = super.makeQuestionMessage(question)
     questionMessage.attachments[0].fields = questionMessage.attachments[0].fields.concat(this.makeHintFields(question, true))
     return questionMessage
   }
 
   makeCorrectAnswerMessage (question, user, points) {
-    var correctMessage = super.makeCorrectAnswerMessage(question, user, points)
+    const correctMessage = super.makeCorrectAnswerMessage(question, user, points)
     correctMessage.attachments[0].image_url = this.imgUrlRoot + question.id + '.png'
     return correctMessage
   }

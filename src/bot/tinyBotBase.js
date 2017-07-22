@@ -12,7 +12,6 @@ class TinyBotBase {
     this.skips = {}
     Object.assign((this.settings = {}), Utils.getDefaultSettings(), settings)
     this.showScoreCounter = this.settings.showScoreInterval
-
     this.questionRepository = new RepositoryProxy(this.settings)
     this.lastHintDate = null
     this.skipHandle = null

@@ -1,2 +1,2 @@
-var bot = require('./index.js')
+const bot = require('./index.js')
 bot.run()

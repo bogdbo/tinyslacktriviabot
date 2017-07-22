@@ -3,14 +3,15 @@ const fs = require('fs')
 const vm = require('vm')
 const _ = require('lodash')
 const smb = require('slack-message-builder')
+const path = require('path')
 
 class JsRepository extends RepositoryBase {
-  constructor (settings) {
+  constructor (repositorySettings, settings) {
     super()
     this.codeBlock = '```'
     this.vmSettings = { timeout: 1000 }
     this.questions = []
-    this.loadQuestions(settings.jsDbPath)
+    this.loadQuestions(repositorySettings.dbPath || path.resolve(__dirname, './../../data/jsQuestions.json'))
   }
 
   loadQuestions (filename) {

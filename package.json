@@ -26,6 +26,7 @@
   "dependencies": {
     "html-entities": "^1.2.1",
     "lodash": "^4.17.4",
+    "object-path": "^0.11.4",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "slack-message-builder": "^1.1.0",
@@ -35,8 +36,8 @@
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^4.2.3",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1"
   }

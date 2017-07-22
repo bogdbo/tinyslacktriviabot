@@ -1,7 +1,13 @@
-var SlackBot = require('slackbots')
-var EventNames = require('./src/constants.js').EventNames
-var TinyChannelBot = require('./src/bot/tinyChannelBot.js')
-var Utils = require('./src/utils.js')
+const SlackBot = require('slackbots')
+const EventNames = require('./src/constants.js').EventNames
+const TinyChannelBot = require('./src/bot/tinyChannelBot.js')
+const Utils = require('./src/utils.js')
+const RepositoryBase = require('./src/repository/repositoryBase.js')
+const DbRepository = require('./src/repository/DbRepository.js')
+const JsRepository = require('./src/repository/JsRepository.js')
+const JsonRepository = require('./src/repository/JsonRepository.js')
+const TriviaDbRepository = require('./src/repository/TriviaDbRepository.js')
+const HsRepository = require('./src/repository/HsRepository.js')
 
 class TinySlackTriviaBot {
   static async run () {
@@ -14,4 +20,14 @@ class TinySlackTriviaBot {
   }
 }
 
-module.exports = TinySlackTriviaBot
+module.exports = {
+  TinySlackTriviaBot,
+  RepositoryBase,
+  Utils,
+
+  DbRepository,
+  JsRepository,
+  JsonRepository,
+  TriviaDbRepository,
+  HsRepository
+}

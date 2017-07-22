@@ -1,4 +1,4 @@
-var TinyBotBase = require('./tinyBotBase.js')
+const TinyBotBase = require('./tinyBotBase.js')
 
 class TinyChannelBot extends TinyBotBase {
   async run () {

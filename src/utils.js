@@ -1,5 +1,5 @@
-var fs = require('fs')
-var path = require('path')
+const fs = require('fs')
+const path = require('path')
 
 class Utils {
   static getRootFolderPath () {
@@ -11,7 +11,6 @@ class Utils {
   }
 
   static getDefaultSettings () {
-    const rootFolder = this.getRootFolderPath()
     const repositoriesFolder = this.getRepositoriesFolderPath()
     return {
       name: 'trivia',
@@ -22,16 +21,22 @@ class Utils {
       autoSkipAfter: 30000,
       filters: [],
       repository: [
-        path.resolve(repositoriesFolder, 'DbRepository.js'),
-        path.resolve(repositoriesFolder, 'TriviaDbRepository.js'),
-        path.resolve(repositoriesFolder, 'JsonRepository.js'),
-        path.resolve(repositoriesFolder, 'HsRepository.js')
-      ],
-      triviaDbUrl: 'https://opentdb.com/api.php?amount=50&type=multiple&encode=url3986',
-      jsonDbPath: path.resolve(rootFolder, 'data/questions.json'),
-      hsDbPath: path.resolve(rootFolder, 'data/hs.json'),
-      jsDbPath: path.resolve(rootFolder, 'data/jsQuestions.json'),
-      sqlDbPath: path.resolve(rootFolder, 'data/trivia.db')
+        {
+          'path': path.resolve(repositoriesFolder, 'DbRepository.js')
+        },
+        {
+          'path': path.resolve(repositoriesFolder, 'TriviaDbRepository.js')
+        },
+        {
+          'path': path.resolve(repositoriesFolder, 'JsonRepository.js')
+        },
+        {
+          'path': path.resolve(repositoriesFolder, 'HsRepository.js')
+        },
+        {
+          'path': path.resolve(repositoriesFolder, 'JsRepository.js')
+        }
+      ]
     }
   }
 
@@ -44,9 +49,9 @@ class Utils {
   }
 
   static loadScores (channelId) {
-    var p = `./${channelId}.json`
+    const p = `./${channelId}.json`
     if (fs.existsSync(p)) {
-      var data = fs.readFileSync(p, 'utf8').trim()
+      const data = fs.readFileSync(p, 'utf8').trim()
       console.log('Scores loaded')
       return JSON.parse(data)
     }
