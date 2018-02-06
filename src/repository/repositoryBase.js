@@ -26,7 +26,7 @@ class RepositoryBase {
         continue
       }
 
-      answerArray[position] = '*'
+      answerArray[position] = '٭'
       hideCharCount--
     }
 
